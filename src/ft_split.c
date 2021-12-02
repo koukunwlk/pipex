@@ -6,13 +6,13 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:26:36 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/12/02 12:33:36 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/12/02 13:52:41 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-char	**ft_split (char *str, char sep)
+char	**ft_split(char *str, char sep)
 {
 	char	**tab;
 	int		count;
@@ -40,7 +40,7 @@ char	**ft_split (char *str, char sep)
 	return (tab);
 }
 
-char	*ft_strdup (char *str, unsigned int n)
+char	*ft_strdup(char *str, unsigned int n)
 {
 	char				*duped;
 	unsigned int		i;
