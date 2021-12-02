@@ -6,24 +6,38 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 15:05:56 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/12/02 11:35:16 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/12/02 13:30:59 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void init_pipe(t_pipe *pipex)
+int	main(int argc, char **argv, char **envp)
 {
-	pipex->infile = 0;
-	pipex->outfile = 0;
+	int	fd_infile;
+	int	fd_outfile;
+
+	if(argc == 5)
+	{
+		fd_infile = openfile(argv[1], INFILE);
+		fd_outfile = openfile(argv[4], OUTFILE);
+	}
+	return (0);
 }
 
-int	main(int argc, char *argv[], char *envp[])
+int	openfile(char *filename, int mode)
 {
-	t_pipe	pipex;
-	int		infile = open(argv[2], O_RDONLY);
-	int		outfile = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666)
-	char	**cmd1;
-	char	**cmd2;
-	return (0);
+	if(mode == INFILE)
+	{
+		if(access(filename, F_OK))
+		{
+			write(STDERR_FILENO, "pipex: ", 7);
+			write(STDERR_FILENO, filename, ft_strchr(filename, 0));
+			write(STDERR_FILENO, " No such file or directory\n", 27);
+			return (STDIN_FILENO);
+		}
+		return (open(filename, O_RDONLY));
+	}
+	else
+		return (open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0666));
 }

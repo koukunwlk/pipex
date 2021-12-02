@@ -1,74 +1,54 @@
-static size_t	ft_word_counter(char const *s, char c);
-static void		ft_alloc_matrix(char const *s, char c, size_t size, char **arr);
-static void		free_all(char **arr);
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/12/02 12:26:36 by mamaro-d          #+#    #+#             */
+/*   Updated: 2021/12/02 12:33:36 by mamaro-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-char	**ft_split(char const *s, char c)
+#include "../includes/pipex.h"
+
+char	**ft_split (char *str, char sep)
 {
-	char	**arr;
-	size_t	i;
-
-	if (!s)
-		return (NULL);
-	i = ft_word_counter(s, c);
-	arr = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!arr)
-		return (NULL);
-	ft_alloc_matrix(s, c, i, arr);
-	return (arr);
-}
-
-static size_t	ft_word_counter(char const *s, char c)
-{
-	size_t	i;
-	size_t	j;
-	char	last;
-
-	last = c;
-	i = 0;
-	j = 0;
-	while (s[i])
-	{
-		if (last == c && s[i] != c)
-			j++;
-		last = s[i];
-		i++;
-	}
-	return (j);
-}
-
-static void	ft_alloc_matrix(char const *s, char c, size_t size, char **arr)
-{
-	size_t	count;
-	char	*tmp;
-	size_t	len;
+	char	**tab;
+	int		count;
+	int		i;
+	int		j;
 
 	count = 0;
-	tmp = (char *)s;
-	while (count < size)
+	j = 0;
+	while (str[j])
 	{
-		len = 0;
-		while (*tmp == c && *tmp != 0)
-			++tmp;
-		while (tmp[len] != c && tmp[len] != 0)
-			len++;
-		arr[count] = ft_substr(tmp, 0, len);
-		if (!arr[count])
-		{
-			free_all(arr);
-			return ;
-		}
-		tmp += len;
-		count++;
+		if (str[j++] == sep)
+			count++;
 	}
-	arr[count] = 0;
+	tab = malloc(sizeof(char *) * (count + 2));
+	tab[count + 1] = NULL;
+	i = 0;
+	while (i < count + 1)
+	{
+		j = 0;
+		while (str[j] && str[j] != sep)
+			j++;
+		tab[i++] = ft_strdup(str, j);
+		str = str + j + 1;
+	}
+	return (tab);
 }
 
-static void	free_all(char **arr)
+char	*ft_strdup (char *str, unsigned int n)
 {
-	int	i;
+	char				*duped;
+	unsigned int		i;
 
 	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
+	duped = malloc(sizeof(char) * (n + 1));
+	while (i < n)
+		duped[i++] = *str++;
+	duped[n] = 0;
+	return (duped);
 }
