@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 13:22:29 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/12/02 19:37:05 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/12/02 20:26:49 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ char	*path_join(char *path, char *cmd)
 	return (joined);
 }
 
-void free_args(char **ptr)
+void free_pipex(t_pipe *pipex)
 {
 	int i;
 
 	i = 0;
-	while(ptr[i++])
-		free((void *)ptr[i]);
-	free(ptr);
+	while(pipex->args_cmd[i])
+		free((void *)pipex->args_cmd[i++]);
+	free((void *)pipex->args_cmd);
 }

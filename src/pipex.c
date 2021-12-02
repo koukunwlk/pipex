@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 15:05:56 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/12/02 19:44:22 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/12/02 20:30:26 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,27 @@ void	redirect(char *cmd, char **envp, t_pipe *pipex)
 
 void	exec_cmd(char *cmd, char **envp, t_pipe *pipex)
 {
-	/*if (ft_strncmp(cmd, "awk", 3) == 0)
+	if (ft_strncmp(cmd, "awk", 3) == 0)
 	{
 		pipex->args_cmd = ft_split(cmd, '\'');
 		pipex->args_cmd[0][3] = 0;
 	}
-	else */
-	pipex->args_cmd = ft_split(cmd, ' ');
+	else
+		pipex->args_cmd = ft_split(cmd, ' ');
 	if (ft_strchr(pipex->args_cmd[0], '/') > -1)
 		pipex->path = pipex->args_cmd[0];
 	else
 		pipex->path = get_path(pipex->args_cmd[0], envp);
+	if(access(pipex->path, F_OK))
+	{
+		free_pipex(pipex);
+		write(STDERR_FILENO, "pipex: ", 7);
+		write(STDERR_FILENO, cmd, ft_strchr(cmd, 0));
+		write(STDERR_FILENO, ": command not found\n", 20);
+		exit(127);
+	}
 	execve(pipex->path, pipex->args_cmd, envp);
-	write(STDERR_FILENO, "pipex: ", 7);
-	write(STDERR_FILENO, cmd, ft_strchr(cmd, 0));
-	write(STDERR_FILENO, ": command not found\n", 20);
-	exit(127);
+	
 }
 
 char	*get_path(char *cmd, char **envp)
