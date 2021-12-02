@@ -6,11 +6,21 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/02 12:26:36 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/12/02 13:52:41 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/12/02 19:25:54 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+static void	free_all(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}
 
 char	**ft_split(char *str, char sep)
 {
@@ -35,6 +45,11 @@ char	**ft_split(char *str, char sep)
 		while (str[j] && str[j] != sep)
 			j++;
 		tab[i++] = ft_strdup(str, j);
+		if (!tab[i - 1])
+		{
+			free_all(tab);
+			return (NULL);
+		}
 		str = str + j + 1;
 	}
 	return (tab);

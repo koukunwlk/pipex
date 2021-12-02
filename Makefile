@@ -1,7 +1,7 @@
 NAME 			=	 pipex
 INCLUDES		= 	-I ./includes
 CC				= 	gcc
-CC_FLAGS		= 	-g 
+CC_FLAGS		= 	-g -Wall -Wextra -Werror
 FILES			= 	pipex.c ft_split.c utils.c
 SRC				=	$(FILES)
 SRC_ALL			=	$(addprefix ./src/, $(FILES))
