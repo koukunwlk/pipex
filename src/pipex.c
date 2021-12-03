@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 15:05:56 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/12/02 21:46:13 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/12/03 16:48:47 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	main(int argc, char **argv, char **envp)
 		redirect(argv[2], envp, &pipex);
 		exec_cmd(argv[3], envp, &pipex);
 	}
+	else if(argc > 5)
+		write(STDOUT_FILENO, "To many arguments", 17);
 	return (0);
 }
 
@@ -66,7 +68,7 @@ void	redirect(char *cmd, char **envp, t_pipe *pipex)
 		close(pipex->fd[1]);
 		dup2(pipex->fd[0], STDIN_FILENO);
 		close(pipex->fd[0]);
-		waitpid(pipex->p_child, NULL, 0);
+		waitpid(pipex->p_child, NULL, WNOHANG);
 	}
 }
 
@@ -89,7 +91,7 @@ void	exec_cmd(char *cmd, char **envp, t_pipe *pipex)
 		write(STDERR_FILENO, "pipex: ", 7);
 		write(STDERR_FILENO, cmd, ft_strchr(cmd, 0));
 		write(STDERR_FILENO, ": command not found\n", 20);
-		exit(127);
+		exit(1);
 	}
 	execve(pipex->path, pipex->args_cmd, envp);
 }
