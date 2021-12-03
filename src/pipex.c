@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 15:05:56 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/12/02 20:30:26 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/12/02 21:46:13 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,15 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_pipe pipex;
+	t_pipe	pipex;
 
-	
 	if (argc == 5)
 	{
 		openfile(argv[1], INFILE, &pipex);
 		openfile(argv[4], OUTFILE, &pipex);
 		dup2(pipex.infile, STDIN_FILENO);
 		dup2(pipex.outfile, STDOUT_FILENO);
-		redirect(argv[2],envp, &pipex);
+		redirect(argv[2], envp, &pipex);
 		exec_cmd(argv[3], envp, &pipex);
 	}
 	return (0);
@@ -84,7 +83,7 @@ void	exec_cmd(char *cmd, char **envp, t_pipe *pipex)
 		pipex->path = pipex->args_cmd[0];
 	else
 		pipex->path = get_path(pipex->args_cmd[0], envp);
-	if(access(pipex->path, F_OK))
+	if (access(pipex->path, F_OK))
 	{
 		free_pipex(pipex);
 		write(STDERR_FILENO, "pipex: ", 7);
@@ -93,7 +92,6 @@ void	exec_cmd(char *cmd, char **envp, t_pipe *pipex)
 		exit(127);
 	}
 	execve(pipex->path, pipex->args_cmd, envp);
-	
 }
 
 char	*get_path(char *cmd, char **envp)

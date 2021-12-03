@@ -6,7 +6,7 @@
 /*   By: mamaro-d <mamaro-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 13:18:43 by mamaro-d          #+#    #+#             */
-/*   Updated: 2021/12/02 20:23:31 by mamaro-d         ###   ########.fr       */
+/*   Updated: 2021/12/02 21:44:46 by mamaro-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	redirect(char *cmd, char **envp, t_pipe *pipex);
 /* utils */
 char	*path_join(char *path, char *cmd);
 char	*get_path(char *cmd, char **envp);
-void 	free_pipex(t_pipe *pipex);
-
+void	free_pipex(t_pipe *pipex);
 
 #endif
